@@ -13,9 +13,7 @@ This module is **not yet hosted at npmjs**, therefore install as follows:
 
 `npm i https://github.com/darryncampbell-pubnub/pubnub-demo-integration-react`
 
-Installation from github will grab the latest version available, to update to the most recent version on main:
-
-`npm update`
+Installation from github will grab the latest version available.
 
 ## Interface
 
