@@ -21,7 +21,14 @@ Installation from github will grab the latest version available, to update to th
 
 To send a message to the demo framework to indicate an action is completed:
 
-`GuidedDemoIntegration.actionCompleted('Action Name');`
+```typescript
+GuidedDemoIntegration.actionCompleted(
+  {
+    action:'Action Name', 
+    blockDuplicateCalls:true, 
+    debug:false
+  });
+```
 
 You also need to define the action in the demo project's `features.json` file, at the root of the project:
 
