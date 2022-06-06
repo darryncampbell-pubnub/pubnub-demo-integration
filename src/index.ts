@@ -1,14 +1,28 @@
 'use strict'
 
+import { ReactSession } from 'react-client-session';
+ReactSession.setStoreType("sessionStorage");
+
 /**
  * Indicate to the demo framework that the specified action has been completed
+ * @param action The feature to be set
+ * @param blockDuplicateCalls Sets a sessionStorage flag so the message is only sent once (saves hammering the keys)
+ * @param debug Extra debug info
  */
-export function actionCompleted(action:string, debug:boolean=false) {
+export function actionCompleted(
+    args: {
+        action:string, 
+        blockDuplicateCalls:boolean, 
+        debug:boolean
+    }) {
     const pub = 'pub-c-c8d024f7-d239-47c3-9a7b-002f346c1849'
     const sub = 'sub-c-95fe09e0-64bb-4087-ab39-7b14659aab47'
-    var identifier = "";
+    let identifier = "";
+    let action = args.action;
+    let blockDuplicateCalls = args.blockDuplicateCalls;
+    let debug = args.debug;
 
-    var queryString = new URL(window.location.href).search.substring(1);
+    let queryString = new URL(window.location.href).search.substring(1);
     const urlParamsArray = queryString.split('&');
     for (let i = 0; i < urlParamsArray.length; i++)
     {
@@ -25,8 +39,29 @@ export function actionCompleted(action:string, debug:boolean=false) {
         return;
     }
 
+    if (blockDuplicateCalls)
+    {
+        //  Read the id from session storage and only send the message if the message was not previous sent
+        let sessionStorageKey = "Demo_" + identifier + action;
+        let storedId = ReactSession.get(sessionStorageKey);
+        if (storedId === undefined)
+        {
+            if (debug)
+                console.log('Setting session key to avoid duplicate future messages being sent. Action: ' + action + '. Identifier: ' + identifier);
+            ReactSession.set(sessionStorageKey, "set");
+        }
+        else
+        {
+            //  This is a duplicate message, do not send it
+            if (debug)
+                console.log('Message blocked as it is a duplicate. Action: ' + action + '. Identifier: ' + identifier);
+
+            return;
+        }
+    }
+
     if (debug)
-        console.log('Action ID: ' + identifier + '. Action completed: ' + action);
+        console.log('Sending message. Action: ' + action + '. Identifier: ' + identifier);
 
     const url = `https://ps.pndsn.com/publish/${pub}/${sub}/0/demo/myCallback/${encodeURIComponent(JSON.stringify({id: identifier, feature: action}))}?store=0&uuid=${identifier}`
 
@@ -49,7 +84,20 @@ export function actionCompleted(action:string, debug:boolean=false) {
 }
 
 //  Credit: https://stackoverflow.com/questions/18862256/how-to-detect-emoji-using-javascript
-export function containsEmoji(testString:string, debug:boolean=false): boolean {
+/**
+ * Test for Emoji in a string
+ * @param testString String to search for emoji
+ * @param debug Extra debug info
+ * @returns Whether or not the test string contains emoji
+ */
+export function containsEmoji(
+    args: {
+        testString:string, 
+        debug:boolean
+    }): boolean {
+    let testString = args.testString;
+    let debug = args.debug;
+
     var hasEmoji = /\p{Extended_Pictographic}/u.test(testString)
     if (debug)
         console.log('Has Emoji?: ' + hasEmoji);
