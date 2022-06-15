@@ -1,17 +1,17 @@
 *Please be aware that this application / sample is provided as-is for demonstration purposes without any guarantee of support*
 =========================================================
 
-# PubNub-Demo-Integration-React
+# PubNub-Demo-Integration
 
 > This is an **internal** PubNub tool.
 
-NPM module designed to be used in React applications to facilitate communication between a demo app and the PubNub guided demo framework.
+NPM module designed to be used in JavaScript and TypeScript applications to facilitate communication between a demo app and the PubNub guided demo framework.
 
 ## Installation
 
 This module is **not yet hosted at npmjs**, therefore install as follows:
 
-`npm i https://github.com/darryncampbell-pubnub/pubnub-demo-integration-react`
+`npm i https://github.com/darryncampbell-pubnub/pubnub-demo-integration`
 
 Installation from github will grab the latest version available.
 
