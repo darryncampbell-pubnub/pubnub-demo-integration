@@ -15,6 +15,8 @@ NPM module designed to be used in JavaScript and TypeScript applications to faci
 
 To send a message to the demo framework to indicate an action is completed:
 
+Typescript:
+
 ```typescript
 actionCompleted(
   {
@@ -23,6 +25,8 @@ actionCompleted(
     debug:false
   });
 ```
+
+Javascript:
 
 ```javascript
 actionCompleted(
