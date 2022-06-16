@@ -57,7 +57,10 @@ var actionCompleted = function(args) {
         }
     }
     if (identifier === "") {
-        console.log('Interactive Demo Integration Error: Failed to detect identifier in URL query string');
+        if (debug)
+        {
+            console.log('Interactive Demo Integration Error: Failed to detect identifier in URL query string');
+        }
         return;
     }
     if (blockDuplicateCalls) {
@@ -81,7 +84,9 @@ var actionCompleted = function(args) {
     }
 
     if (debug)
+    {
         console.log('Sending message. Action: ' + action + '. Identifier: ' + identifier);
+    }
     
     const url = `https://ps.pndsn.com/publish/${pub}/${sub}/0/demo/myCallback/${encodeURIComponent(JSON.stringify({ id: identifier, feature: action }))}?store=0&uuid=${identifier}`;
     fetchClient(url)
