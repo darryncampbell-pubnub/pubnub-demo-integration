@@ -9,23 +9,29 @@ NPM module designed to be used in JavaScript and TypeScript applications to faci
 
 ## Installation
 
-This module is **not yet hosted at npmjs**, therefore install as follows:
-
-`npm i https://github.com/darryncampbell-pubnub/pubnub-demo-integration`
-
-Installation from github will grab the latest version available.
+`npm i pubnub-demo-integration`
 
 ## Interface
 
 To send a message to the demo framework to indicate an action is completed:
 
 ```typescript
-GuidedDemoIntegration.actionCompleted(
+actionCompleted(
   {
     action:'Action Name', 
-    blockDuplicateCalls:true, 
+    blockDuplicateCalls:true, // only applicable when called from the clientside
     debug:false
   });
+```
+
+```javascript
+actionCompleted(
+{
+  action: 'Action Name',
+  debug: false,
+  windowLocation: 'http://...',  // Optionally, pass in the URL of the current page so the identifier can be determined from the query string
+  fetchClient: object // If run from the serverside, you can pass in an HTTP client for the module to use.  Clientside will use fetch()
+});
 ```
 
 You also need to define the action in the demo project's `features.json` file, at the root of the project:
