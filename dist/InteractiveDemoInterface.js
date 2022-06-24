@@ -65,22 +65,26 @@ var actionCompleted = function(args) {
     }
     if (blockDuplicateCalls) {
         //  This option only works if the sessionStorage object is defined (client-side only)
-        if (!(typeof sessionStorage === 'undefined')) {
-            //  Read the id from session storage and only send the message if the message was not previous sent
-            let sessionStorageKey = "Demo_" + identifier + action;
-            let storedId = sessionStorage.getItem(sessionStorageKey);
-            if (storedId == null) {
-                if (debug)
-                    console.log('Setting session key to avoid duplicate future messages being sent. Action: ' + action + '. Identifier: ' + identifier);
-                    sessionStorage.setItem(sessionStorageKey, "set");
-            }
-            else {
-                //  This is a duplicate message, do not send it
-                if (debug)
-                    console.log('Message blocked as it is a duplicate. Action: ' + action + '. Identifier: ' + identifier);
-                return;
-            }
+        try {
+            if (!(typeof sessionStorage === 'undefined')) {
+                //  Read the id from session storage and only send the message if the message was not previous sent
+                let sessionStorageKey = "Demo_" + identifier + action;
+                let storedId = sessionStorage.getItem(sessionStorageKey);
+                if (storedId == null) {
+                    if (debug)
+                        console.log('Setting session key to avoid duplicate future messages being sent. Action: ' + action + '. Identifier: ' + identifier);
+                        sessionStorage.setItem(sessionStorageKey, "set");
+                }
+                else {
+                    //  This is a duplicate message, do not send it
+                    if (debug)
+                        console.log('Message blocked as it is a duplicate. Action: ' + action + '. Identifier: ' + identifier);
+                    return;
+                }
+            }                   
         }
+        catch (err) {} //  Session storage is not available
+
     }
 
     if (debug)
