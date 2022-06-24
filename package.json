@@ -1,6 +1,6 @@
 {
   "name": "pubnub-demo-integration",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Interface between PubNub demo apps and the interactive demo framework",
   "main": "dist/App.js",
   "module": "dist/App.js",
