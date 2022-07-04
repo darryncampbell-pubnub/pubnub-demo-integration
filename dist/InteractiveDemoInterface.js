@@ -30,7 +30,7 @@ var actionCompleted = function(args) {
 
     if (typeof blockDuplicateCalls === 'undefined')
     {
-        blockDuplicateCalls = true;
+        blockDuplicateCalls = false;
     }
 
     if (typeof debug === 'undefined')
