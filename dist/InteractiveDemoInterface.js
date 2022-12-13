@@ -39,7 +39,7 @@ var actionCompleted = function(args) {
     }
 
     //  If invoked from client-side, you can omit the window location
-    if (typeof windowLocation === 'undefined')
+    if (typeof windowLocation === 'undefined' || windowLocation === null)
         windowLocation = window.location.href;
 
     var fetchClient = null;
